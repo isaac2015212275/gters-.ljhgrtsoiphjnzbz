@@ -5,6 +5,16 @@ import java.util.*;
 import java.io.FileInputStream;
 
 public class GradeSystems {
+	/**
+	 * 建構子
+	 * @throws IOException
+	 * Pseudo code
+	 * 1.readFile()
+	 * 2.loop
+	 * 	calculateTotalgrade
+	 * 
+	 * Time estimate: O(n)
+	 */
 	public GradeSystems ( ) throws IOException {
 		this.aList = new LinkedList<Grades>();
 		this.readFile("./src/gradeinput.txt");
@@ -12,7 +22,18 @@ public class GradeSystems {
 			this.aList.get(i).calculateTotalGrade(this.weights);
 		}
 	}
-	
+	/**
+	 * method readFile
+	 * @param fileName
+	 * @throws IOException
+	 * Pseudo code
+	 * 1.while not EOF
+	 * 	readline
+	 * 	分割input
+	 * 	建立Grades並加到aList
+	 * 
+	 * Time estimate: O(n)
+	 */
 	public void readFile(String fileName) throws IOException{
 		this.file = new FileInputStream(fileName);
 		this.buff = new BufferedReader(new InputStreamReader(file, "UTF-8"));
@@ -23,7 +44,14 @@ public class GradeSystems {
 			this.aList.add(aGrade);
 		}
 	}
-	
+	/**
+	 * Method showGrade
+	 * @param ID
+	 * Pseudo code
+	 * print grades
+	 * 
+	 * Time estimate: O(1)
+	 */
 	public void showGrade (int ID) {
 		for(int i=0; i<this.aList.size(); i++) {
 			if (this.aList.get(i).ID == ID)
@@ -37,7 +65,17 @@ public class GradeSystems {
 			}
 		}
 	}
-	
+	/**
+	 * method showRank
+	 * @param ID
+	 * Pseudo code
+	 * 1.rank = 1
+	 * 2.find the total grade of the ID
+	 * 3.loop aList
+	 * 	if aList[i].totalGrade > ID.totalGrade: rank+1
+	 * 
+	 * Time estimate: O(n)
+	 */
 	public void showRank (int ID) {
 		int rank = 1;
 		for(int i=0; i<this.aList.size(); i++) 
@@ -48,27 +86,60 @@ public class GradeSystems {
 				rank = rank+1;
 		System.out.println("Student with ID "+ID+" has rank "+rank);
 	}
-	
+	/**
+	 * method updateWeights
+	 * Pseudo code
+	 * 1.loop aList
+	 * 	calculateTotalGrade
+	 * 
+	 * Time estimate:O(n)
+	 */
 	public void updateWeights() {
 		for(int i=0; i<this.aList.size(); i++) {
 			this.aList.get(i).calculateTotalGrade(this.weights);
 		}
 	}
-	
+	/**
+	 * 
+	 * @param ID
+	 * @return boolean
+	 * Pseudo code
+	 * 1.find if ID is in aList
+	 * 
+	 * Time estimate: O(n)
+	 * Example: UI物件.checkID(962001044) ; 傳回結果為 true
+	 */
 	public boolean containsID(int ID) {
 		for(int i=0; i<this.aList.size(); i++) 
 			if (this.aList.get(i).ID == ID)
 				return true;
 		return false;
 	}
-	
+	/**
+	 * method getName
+	 * @param ID
+	 * @return name
+	 * Pseudo code
+	 * 1.find if ID is in aList
+	 * 2.if so, return ID's name
+	 * 3.else return null
+	 * 
+	 * Time estimate: O(n)
+	 * Example: UI物件.getName(955002056) ; 傳回結果為"許文馨"
+	 */
 	public String getName(int ID) {
 		for(int i=0; i<this.aList.size(); i++) 
 			if (this.aList.get(i).ID == ID)
 				return this.aList.get(i).name;
 		return null;
 	}
-	
+	/**
+	 * method showOldWeights
+	 * Pseudo code
+	 * 1.print weight
+	 * 
+	 * Time estimate: O(1)
+	 */
 	public void showOldWeights() {
 		System.out.println("Lab1 "+(int)(this.weights[0]*100)+"%");
 		System.out.println("Lab2 "+(int)(this.weights[1]*100)+"%");
@@ -76,7 +147,16 @@ public class GradeSystems {
 		System.out.println("Midterm "+(int)(this.weights[3]*100)+"%");
 		System.out.println("Final Exam "+(int)(this.weights[4]*100)+"%");
 	}
-	
+	/**
+	 * method getNewWeights()
+	 * Pseudo code
+	 * 1.show original weight
+	 * 2.get new weight
+	 * 3.show new weights
+	 * 4.calculate new total grade
+	 * 
+	 * Time estimate: O(n)
+	 */
 	public void getNewWeights() {
 		Scanner sc = new Scanner(System.in);
 		this.showOldWeights();
@@ -86,7 +166,15 @@ public class GradeSystems {
 		this.updateWeights();
 		sc.close();
 	}
-	
+	/**
+	 * method enterWeight
+	 * Pseudo code
+	 * 1.迴圈要求輸入
+	 * 	1.印出要求訊息
+	 * 	2.讀取輸入值
+	 * 
+	 * Time estimate: O(1)
+	 */
 	public void enterWeight() {
 		Scanner sc = new Scanner(System.in);
 		String[] str = {"Lab1", "Lab2", "Lab3", "midTerm", "finalExam"};
@@ -96,7 +184,14 @@ public class GradeSystems {
 		}
 		sc.close();
 	}
-	
+	/**
+	 * method showAverage
+	 * Pseudo code
+	 * 1.迴圈加總totaslGrade
+	 * 2.計算平均
+	 * 
+	 * Time estimate: O(n)
+	 */
 	public void showAverage() {
 		int total = 0;
 		float average;

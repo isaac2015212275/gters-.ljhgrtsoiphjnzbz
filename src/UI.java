@@ -3,6 +3,17 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class UI {
+	/**
+	 * 
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * Pseudo code
+	 * 1.while迴圈
+	 * 	若尚未有使用者，promtID()
+	 * 	若已有 確認使用者是否存在，然後顯示歡迎訊息跟promptCommand
+	 * 
+	 * Time estimate: O(1)
+	 */
 	public UI() throws InterruptedException, IOException {
 		aGradeSystem = new GradeSystems();
 		sc = new Scanner(System.in);
@@ -17,7 +28,16 @@ public class UI {
 			if(this.fin == true) break;
 		}
 	}
-	
+	/**
+	 * method checkID
+	 * @param ID
+	 * @return
+	 * Pseudo code
+	 * 1.尋找ID是否存在資料中
+	 * 2.設定curUser
+	 * 
+	 * Time estimate: O(1)
+	 */
 	public boolean checkID(int ID) {
 		if(this.aGradeSystem.containsID(ID))
 			return true;
@@ -25,7 +45,14 @@ public class UI {
 		this.curUser = 0;
 		return false;
 	}
-	
+	/**
+	 * method promptCommand
+	 * Pseudo code
+	 * 1.印出選項
+	 * 2.讀入選信並判斷
+	 * 
+	 * Time estimate: O(1)
+	 */
 	public void promptCommand() {
 		this.printCommand();
 		if(command.equals("G") || command.equals("g")) this.aGradeSystem.showGrade(curUser);
@@ -35,7 +62,14 @@ public class UI {
 		else if(command.equals("E") || command.equals("e")) this.showFinishMsg();
 		else System.out.println("Wrong Command!");
 	}
-	
+	/**
+	 * method printCommand
+	 * Pseudo code
+	 * 1.印出選項
+	 * 2.讀取指令
+	 * 
+	 * Time estimate: O(1)
+	 */
 	public void printCommand() {
 		System.out.println(" Type in command");
 		System.out.println(" 	1)G Show Grade");
@@ -45,7 +79,17 @@ public class UI {
 		System.out.println("	5)E Exit");
 		this.command = sc.nextLine();
 	}
-	
+	/**
+	 * method promptID
+	 * @throws InterruptedException
+	 * Pseudo code
+	 * 1.顯示訊息
+	 * 2.判斷輸入是否為"Q"
+	 * 	若為Q則關閉系統
+	 * 	否則將輸入存進curUser
+	 * 
+	 * Time estimate: O(1)
+	 */
 	public void promptID() throws InterruptedException {
 		System.out.println("Please enter your student ID to start or enter Q to quit : ");
 		command = sc.nextLine();
@@ -57,16 +101,29 @@ public class UI {
 		else
 			this.curUser = Integer.parseInt(command);
 	}
-	
+	/**
+	 * method showFinishMsg
+	 * Pseudo code
+	 * 1.顯示訊息
+	 * 2.清除curUser
+	 * 
+	 * Time estimate:O(1)
+	 */
 	public void showFinishMsg() {
 		System.out.println("Bye bye, "+this.aGradeSystem.getName(curUser));
 		this.curUser = 0;
 	}
-	
+	/**
+	 * method showWelcomeMsg
+	 * Pseudo code
+	 * 1.顯示訊息
+	 * 
+	 * Time estimate:O(1)
+	 */
 	public void showWelcomeMsg() {
 		System.out.println("Welcome to grade system, "+this.aGradeSystem.getName(curUser));
 	}
-	
+
 	GradeSystems aGradeSystem;
 	Scanner sc;
 	public int curUser = 0;
