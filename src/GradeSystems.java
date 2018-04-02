@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.util.*;
+import java.util.stream.IntStream;
 import java.io.FileInputStream;
 
 public class GradeSystems {
@@ -34,7 +35,7 @@ public class GradeSystems {
 	 * 
 	 * Time estimate: O(n)
 	 */
-	public void readFile(String fileName) throws IOException{
+	private void readFile(String fileName) throws IOException{
 		this.file = new FileInputStream(fileName);
 		this.buff = new BufferedReader(new InputStreamReader(file, "UTF-8"));
 		char c = (char) buff.read();
@@ -94,7 +95,10 @@ public class GradeSystems {
 	 * 
 	 * Time estimate:O(n)
 	 */
-	public void updateWeights() {
+	private void updateWeights(int[] newWeight) {
+		for(int i=0; i<5; i++) {
+			this.weights[i] = (float)(newWeight[i])/100;
+		}
 		for(int i=0; i<this.aList.size(); i++) {
 			this.aList.get(i).calculateTotalGrade(this.weights);
 		}
@@ -140,7 +144,7 @@ public class GradeSystems {
 	 * 
 	 * Time estimate: O(1)
 	 */
-	public void showOldWeights() {
+	private void showOldWeights() {
 		System.out.println("Lab1 "+(int)(this.weights[0]*100)+"%");
 		System.out.println("Lab2 "+(int)(this.weights[1]*100)+"%");
 		System.out.println("Lab3 "+(int)(this.weights[2]*100)+"%");
@@ -158,13 +162,15 @@ public class GradeSystems {
 	 * Time estimate: O(n)
 	 */
 	public void getNewWeights() {
-		Scanner sc = new Scanner(System.in);
 		this.showOldWeights();
-		this.enterWeight();
-		System.out.println("This is new weight you just typ in, please check :");
-		this.showOldWeights();
-		this.updateWeights();
-		sc.close();
+		int[] newWeight =  this.enterWeight();
+		if(IntStream.of(newWeight).sum() == 100) {
+			System.out.println("This is new weight you just typ in, please check :");
+			this.updateWeights(newWeight);
+			this.showOldWeights();
+		}else {
+			System.out.println("Sum of the weight does not equal to 100!");
+		}
 	}
 	/**
 	 * method enterWeight
@@ -175,14 +181,15 @@ public class GradeSystems {
 	 * 
 	 * Time estimate: O(1)
 	 */
-	public void enterWeight() {
+	private int[] enterWeight() {
+		int[] newWeight = new int[5];
 		Scanner sc = new Scanner(System.in);
 		String[] str = {"Lab1", "Lab2", "Lab3", "midTerm", "finalExam"};
 		for(int i = 0; i<5; i++) {
 			System.out.println("Please type in new weight of "+ str[i] +" :");
-			this.weights[i] = (float)(sc.nextInt())/100;
+			newWeight[i] = Integer.parseInt(sc.nextLine());
 		}
-		sc.close();
+		return newWeight;
 	}
 	/**
 	 * method showAverage

@@ -16,13 +16,13 @@ public class UI {
 	 */
 	public UI() throws InterruptedException, IOException {
 		aGradeSystem = new GradeSystems();
-		sc = new Scanner(System.in);
 		while(true) {
 			if(curUser == 0) promptID();
 			else {
 				if(checkID(curUser) == true) {
 					this.showWelcomeMsg();
 					this.promptCommand();
+					this.command = "";
 				}
 			}
 			if(this.fin == true) break;
@@ -38,7 +38,7 @@ public class UI {
 	 * 
 	 * Time estimate: O(1)
 	 */
-	public boolean checkID(int ID) {
+	private boolean checkID(int ID) {
 		if(this.aGradeSystem.containsID(ID))
 			return true;
 		System.out.println("This ID is not in the list, please try again!");
@@ -53,7 +53,7 @@ public class UI {
 	 * 
 	 * Time estimate: O(1)
 	 */
-	public void promptCommand() {
+	private void promptCommand() {
 		this.printCommand();
 		if(command.equals("G") || command.equals("g")) this.aGradeSystem.showGrade(curUser);
 		else if(command.equals("R") || command.equals("r"))	this.aGradeSystem.showRank(curUser);
@@ -70,14 +70,18 @@ public class UI {
 	 * 
 	 * Time estimate: O(1)
 	 */
-	public void printCommand() {
-		System.out.println(" Type in command");
-		System.out.println(" 	1)G Show Grade");
-		System.out.println("	2)R Show Rank");
-		System.out.println(" 	3)A Show Average");
-		System.out.println("	4)W Renew Grade Weight");
-		System.out.println("	5)E Exit");
-		this.command = sc.nextLine();
+	private void printCommand() {
+		try {
+			Scanner sc = new Scanner(System.in);
+			System.out.println(" Type in command");
+			System.out.println(" 	1)G Show Grade");
+			System.out.println("	2)R Show Rank");
+			System.out.println(" 	3)A Show Average");
+			System.out.println("	4)W Renew Grade Weight");
+			System.out.println("	5)E Exit");
+			this.command = sc.nextLine();
+		}
+		catch (NoSuchElementException e) {}
 	}
 	/**
 	 * method promptID
@@ -90,16 +94,22 @@ public class UI {
 	 * 
 	 * Time estimate: O(1)
 	 */
-	public void promptID() throws InterruptedException {
+	private void promptID() throws InterruptedException {
+		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter your student ID to start or enter Q to quit : ");
 		command = sc.nextLine();
-		if(command.equals("Q") || command.equals("q")) {
-			this.fin = true;
-			System.out.println("Leaving System...");
-			TimeUnit.SECONDS.sleep(2);
+		try {
+			if(command.equals("Q") || command.equals("q")) {
+				this.fin = true;
+				System.out.println("Leaving System...");
+				TimeUnit.SECONDS.sleep(2);
+			}
+			else
+				this.curUser = Integer.parseInt(command);
 		}
-		else
-			this.curUser = Integer.parseInt(command);
+		catch (NumberFormatException e){
+			System.out.println("Illegal input, please try again!");
+		}
 	}
 	/**
 	 * method showFinishMsg
@@ -109,7 +119,7 @@ public class UI {
 	 * 
 	 * Time estimate:O(1)
 	 */
-	public void showFinishMsg() {
+	private void showFinishMsg() {
 		System.out.println("Bye bye, "+this.aGradeSystem.getName(curUser));
 		this.curUser = 0;
 	}
@@ -120,12 +130,12 @@ public class UI {
 	 * 
 	 * Time estimate:O(1)
 	 */
-	public void showWelcomeMsg() {
+	private void showWelcomeMsg() {
 		System.out.println("Welcome to grade system, "+this.aGradeSystem.getName(curUser));
 	}
 
 	GradeSystems aGradeSystem;
-	Scanner sc;
+	
 	public int curUser = 0;
 	public String command;
 	public boolean fin = false; 
