@@ -13,14 +13,14 @@ public class intergrationTest {
 	ByteArrayOutputStream outContent;
 	@Before
 	public void setUp() throws Exception {
-		//ui = new UI();
-		outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
+		this.ui = new UI();
+		this.outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(this.outContent));
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		ui= null;
+		this.ui= null;
 	}
 
 	@Test
