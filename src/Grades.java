@@ -1,4 +1,13 @@
-
+/**
+ * Grade
+ * @param ID
+ * @param name
+ * @param lab1
+ * @param lab2
+ * @param lab3
+ * @param midTerm
+ * @param finalExam
+ */
 public class Grades {
 	public Grades (int ID, String name, int lab1, int lab2, int lab3, int midTerm, int finalExam) {
 		this.ID = ID;
@@ -9,7 +18,12 @@ public class Grades {
 		this.midTerm = midTerm;
 		this.finalExam = finalExam;
 	}
-	
+	/**
+	 * method calculateTotalGrade
+	 * @param weights
+	 * 1.加總所有(成績*weight)
+	 * 2.四捨五入取整數
+	 */
 	public void calculateTotalGrade(float[] weights) {
 		float total = this.lab1 * weights[0] +
 					  this.lab2 * weights[1] +
