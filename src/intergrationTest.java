@@ -11,6 +11,7 @@ import org.junit.Test;
 public class intergrationTest {
 	UI ui;
 	ByteArrayOutputStream outContent;
+	ByteArrayInputStream  inContent;
 	@Before
 	public void setUp() throws Exception {
 		this.ui = new UI();
@@ -25,7 +26,10 @@ public class intergrationTest {
 
 	@Test
 	public void test1() {
-		System.setIn(new ByteArrayInputStream("975002021\r\n".getBytes()));
+		inContent =  new ByteArrayInputStream("975002021".getBytes());
+		System.setIn(inContent);
+		inContent =  new ByteArrayInputStream("g".getBytes());
+		System.setIn(inContent);
 		String testStr1 = 
 				"Please enter your student ID to start or enter Q to quit :\r\n"+
 				"Student with ID 975002021 has Lab1 grade 81\r\n" + 
